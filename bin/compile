@@ -2,8 +2,19 @@
 
 set -eu
 
+# Parse params
+BUILD_DIR=$1
+ENV_DIR=$3
+
+# Default version
 METABASE_VERSION=`cat ./bin/version`
-METABASE_DIR="$1/target/uberjar"
+
+# Read version from configured METABASE_VERSION
+if [ -f $ENV_DIR/METABASE_VERSION ]; then
+  METABASE_VERSION=$(cat $ENV_DIR/METABASE_VERSION)
+fi
+
+METABASE_DIR="$BUILD_DIR/target/uberjar"
 METABASE_JAR="$METABASE_DIR/metabase.jar"
 METABASE_URL="https://downloads.metabase.com/v$METABASE_VERSION/metabase.jar"
 
